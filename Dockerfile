@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile=1
 # All-in-one MailAccess image: FastAPI backend + pre-built React frontend served by nginx.
 # Backend source pinned to an upstream commit of github.com/KatrielMoses/MailAccess (MIT).
 # Frontend is pre-built (see static/) with branding: "Mail Access" by femo.
