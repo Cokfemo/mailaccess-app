@@ -19,7 +19,7 @@ fi
 if [ -n "$SITE_PASSWORD" ]; then
   (cd /app && uvicorn auth_service:app --host 127.0.0.1 --port 8001 --log-level warning) &
   AUTH_BLOCK='auth_request /auth/check;'
-  LOGIN_REDIRECT='error_page 401 403 =302 /login;'
+  LOGIN_REDIRECT='error_page 401 403 = @login_redirect;'
   AUTH_LOCATIONS='
     location = /login {
       try_files /login.html =404;
@@ -41,6 +41,10 @@ if [ -n "$SITE_PASSWORD" ]; then
       proxy_pass http://127.0.0.1:8001/login;
       proxy_set_header Host $host;
       proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location @login_redirect {
+      return 302 /login;
     }
 
     location = /auth/logout {
